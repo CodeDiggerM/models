@@ -65,6 +65,10 @@ class BertPretrainLossAndMetricLayer(tf.keras.layers.Layer):
       self.add_metric(
           next_sentence_loss, name='next_sentence_loss', aggregation='mean')
 
+  def get_config(self):
+    base_config = super().get_config()
+    return dict(list(base_config.items()) + list(self.config.items()))
+
   def call(self,
            lm_output_logits,
            sentence_output_logits,

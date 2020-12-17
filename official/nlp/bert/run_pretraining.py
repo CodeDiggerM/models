@@ -30,6 +30,9 @@ from official.nlp.bert import configs
 from official.nlp.bert import input_pipeline
 from official.nlp.bert import model_training_utils
 from official.utils.misc import distribution_utils
+from official.utils.misc import model_saving_utils
+
+
 
 
 flags.DEFINE_string('input_files', None,
@@ -190,7 +193,10 @@ def main(_):
   if strategy:
     print('***** Number of cores used : ', strategy.num_replicas_in_sync)
 
-  run_bert_pretrain(strategy)
+  model = run_bert_pretrain(strategy)
+  model_saving_utils.export_bert_model("tf_model.h5", model)
+
+
 
 
 if __name__ == '__main__':
